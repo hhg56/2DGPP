@@ -9,20 +9,28 @@ import game_framework
 import title_state
 
 from map import Map
+from player import Player
+from house import House
 
 name = "MainState"
 
 map = None
+player = None
+house = None
 
 def enter():
     game_framework.reset_time()
-    global map
+    global map, player, house
     map = Map()
+    player = Player()
+    house = House()
 
 
 def exit():
-    global map
-    del(map)
+    global map, player, house
+    del (map)
+    del (player)
+    del (house)
 
 
 def pause():
@@ -40,6 +48,10 @@ def handle_events(frame_time):
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             game_framework.change_state(title_state)
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_d):
+            Player.flag = 1
+        elif (event.type, event.key) == (SDL_KEYUP, SDLK_d):
+            Player.flag = 0
 
 
 def collide(a, b):
@@ -55,10 +67,12 @@ def collide(a, b):
 
 
 def update(frame_time):
-    #map.update(frame_time)
+    player.update(frame_time)
     delay(0.01)
 
 def draw(frame_time):
     clear_canvas()
+    house.draw()
     map.draw()
+    player.draw()
     update_canvas()
