@@ -118,7 +118,7 @@ class Map:
             Map.image = load_image('ping.png')
 
     def update(self, frame_time):
-        if int(Player.xx) >= (800 * self.flag) - 3 and int(Player.xx) <= (800 * self.flag) + 3:
+        if int(Player.xx) >= (800 * self.flag) - 20 and int(Player.xx) <= (800 * self.flag) + 20:
             self.fflag = 1
 
         if self.fflag == 1:
