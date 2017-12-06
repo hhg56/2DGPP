@@ -8,7 +8,7 @@ class Snow:
     def __init__(self):
         self.x, self.y = random.randint(5, 790), random.randint(10, 600)
         if Snow.image == None:
-            Snow.image = load_image('snow.png')
+            Snow.image = load_image('resouce\\snow.png')
 
     def update(self, frame_time):
         self.y -= 1

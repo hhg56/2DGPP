@@ -34,7 +34,7 @@ class Map:
                     self.j += 1
 
         if Map.image == None:
-            Map.image = load_image('ping.png')
+            Map.image = load_image('resouce\\ping.png')
 
     def update(self, frame_time):
         if int(Player.unreal_x) >= (800 * self.flag) - 20 and int(Player.unreal_x) <= (800 * self.flag) + 20:
@@ -91,7 +91,7 @@ class Player:
         self.jump_dir = 5.0
         self.back_state = 0
         if Player.image == None:
-            Player.image = load_image('board.png')
+            Player.image = load_image('resouce\\board.png')
 
     def update(self, frame_time):
 

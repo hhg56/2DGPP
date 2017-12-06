@@ -8,7 +8,7 @@ class Coin:
         self.y = 550
         self.frame = 0
         if self.image == None:
-            self.image = load_image('coin.png')
+            self.image = load_image('resouce\\coin.png')
 
     def update(self, frame_time):
         self.frame += 1

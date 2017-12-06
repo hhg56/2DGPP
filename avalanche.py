@@ -11,7 +11,7 @@ class Avalanche:
         self.y = 280.0
         self.z = 0
         if self.image == None:
-            self.image = load_image('avalanche.png')
+            self.image = load_image('resouce\\avalanche.png')
 
     def update(self, frame_time):
         if Player.state == 1:

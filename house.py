@@ -9,7 +9,7 @@ class House:
         self.x = 300.0
         self.y = 350.0
         if self.image == None:
-            House.image = load_image('house.png')
+            House.image = load_image('resouce\\house.png')
 
     def update(self, frame_time):
         if Player.state == 1:
