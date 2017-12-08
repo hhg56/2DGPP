@@ -95,6 +95,8 @@ def update(frame_time):
     coin.update(frame_time)
     for map_on_coin in map_on_coins:
         map_on_coin.update(frame_time)
+        map_on_coin.remove(frame_time)
+
     for snow in snows:
         snow.update(frame_time)
     delay(0.01)
