@@ -1,26 +1,39 @@
 from pico2d import *
 
-from player_and_map import  Player
+from player_and_map import Player
 
 class Avalanche:
     image = None
-    x = 0
 
     def __init__(self):
-        self.x = 350.0
+        self.x = -400.0
         self.y = 280.0
+        self.speed_up = 0.0
         self.z = 0
+        self.eat_palyer = 0
         if self.image == None:
             self.image = load_image('resouce\\avalanche.png')
 
     def update(self, frame_time):
-        if Player.state == 1:
-            self.x -= 5
-
-        if self.z > 500:
-            self.x+=1
+        if self.eat_palyer == 1:
+            if self.speed_up  <= 300:
+                self.speed_up = 1
+                self.x+=self.speed_up
+            else:
+                self.speed_up = 400
+                
         else:
-            self.z+=1
+            if self.z > 10:
+                self.speed_up+=0.01
+                self.x += self.speed_up
+            else:
+                self.z+=1
 
     def draw(self):
-        self.image.draw(self.x, self.y)
+        self.image.draw(self.x - Player.unreal_x + 380, self.y)
+
+    def get_bb(self):
+        return self.x - Player.unreal_x -600, self.y - 300 ,self.x - Player.unreal_x + 600, self.y+300
+
+    def eat(self, player):
+        self.eat_palyer = 1

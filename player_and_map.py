@@ -5,7 +5,6 @@ from pico2d import *
 class Map:
     x = None
     y = None
-    start_flag = None
     image = None
     arr_x = []
     arr_y = []
@@ -19,7 +18,7 @@ class Map:
         self.flag = 1
         self.map_move_y_flag = 0
 
-        if Map.start_flag == None:
+        if Map.image == None:
             for i in range(0, 10):
                 self.i = 800*i
                 while self.i < 620 + (800*i):
@@ -33,7 +32,6 @@ class Map:
                     Map.arr_y.append(self.r * math.cos(self.j / 180.0 * math.pi) + self.d -(200*i) - self.r)
                     self.j += 1
 
-        if Map.image == None:
             Map.image = load_image('resouce\\ping.png')
 
     def update(self, frame_time):
@@ -66,6 +64,8 @@ class Player:
 
     STAND, RUN, JUMP, STOP, SPIN = 0, 1, 2, 3, 4
     image = None
+    eat_sound = None
+    font = None
     x = None
     y = None
     jump_before_y = None
@@ -90,8 +90,14 @@ class Player:
         self.y_dir = 0.0
         self.jump_dir = 5.0
         self.back_state = 0
+        self.eat_coin_num = 0
         if Player.image == None:
             Player.image = load_image('resouce\\board.png')
+
+            Player.font = load_font('resouce\\ENCR10B.TTF')
+
+            Player.eat_sound = load_wav('resouce\\coin.wav')
+            Player.eat_sound.set_volume(32)
 
     def update(self, frame_time):
 
@@ -172,8 +178,10 @@ class Player:
         elif Player.state == self.SPIN:
             self.image.clip_draw(0, 140, 44, 60, self.x, self.y)
 
+        Player.font.draw(680, 550, '%d' % self.eat_coin_num,(255,255,0))
+
     def get_bb(self):
-        return self.x - 20, self.y - 40, self.x+20, self.y + 40
+        return self.x - 20, self.y - 30, self.x+20, self.y + 30
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
@@ -196,7 +204,12 @@ class Player:
                 Player.state = self.JUMP
                 self.jump_flag = 1
                 self.back_y = Player.y
-            elif Player.state in (self.RUN, self.STOP, ):
+            elif Player.state in (self.STOP, ):
+                self.back_state = self.STOP
+                Player.state = self.JUMP
+                self.jump_flag = 1
+                Player.jump_before_y = Player.y
+            elif Player.state in (self.RUN, ):
                 self.back_state = self.RUN
                 Player.state = self.JUMP
                 self.jump_flag = 1
@@ -207,3 +220,7 @@ class Player:
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_SPACE):
             if Player.state in (self.SPIN, ):
                 self.spin_flag = 0
+
+    def eat(self, map_on_coin):
+        self.eat_sound.play()
+        self.eat_coin_num += 1

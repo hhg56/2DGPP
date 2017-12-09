@@ -93,9 +93,16 @@ def update(frame_time):
     avalanche.update(frame_time)
     house.update(frame_time)
     coin.update(frame_time)
+
+    if collide(avalanche, player):
+        pass # 패배처리
+
     for map_on_coin in map_on_coins:
         map_on_coin.update(frame_time)
-        map_on_coin.remove(frame_time)
+
+        if collide(map_on_coin, player):
+            map_on_coins.remove(map_on_coin)
+            player.eat(map_on_coin)
 
     for snow in snows:
         snow.update(frame_time)

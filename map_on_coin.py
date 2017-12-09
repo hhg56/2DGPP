@@ -25,6 +25,8 @@ class Map_on_Coin:
         else:
             self.frame_x += 1
 
+    def get_bb(self):
+        return self.x - Player.unreal_x + 380 - 12, self.y*2 - Player.y + Map.map_move_y_minor*2 - 13, self.x - Player.unreal_x + 380 + 12, self.y*2 - Player.y + Map.map_move_y_minor*2 + 13
 
     def draw(self):
         self.image.clip_draw(self.frame_x * 25, self.frame_y * 26, 25, 26, self.x - Player.unreal_x + 380, self.y*2 - Player.y + Map.map_move_y_minor*2)

@@ -1,5 +1,6 @@
 from pico2d import *
 
+
 class Coin:
     image = None
 
