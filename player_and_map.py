@@ -65,6 +65,8 @@ class Player:
     STAND, RUN, JUMP, STOP, SPIN = 0, 1, 2, 3, 4
     image = None
     eat_sound = None
+    jump_sound = None
+    spin_sound = None
     font = None
     x = None
     y = None
@@ -85,6 +87,7 @@ class Player:
         self.frame = random.randint(0, 8)
         self.life_time = 0.0
         self.spin_flag = 0
+        self.spin_energy = 0
         self.total_frames = 0.0
         self.dir = 0.0
         self.y_dir = 0.0
@@ -96,6 +99,10 @@ class Player:
 
             Player.font = load_font('resouce\\ENCR10B.TTF')
 
+            Player.spin_sound = load_wav('resouce\\spin.wav')
+            Player.spin_sound.set_volume(32)
+            Player.jump_sound = load_wav('resouce\\jump.wav')
+            Player.jump_sound.set_volume(32)
             Player.eat_sound = load_wav('resouce\\coin.wav')
             Player.eat_sound.set_volume(32)
 
@@ -113,22 +120,21 @@ class Player:
             self.frame = int(self.total_frames) % 2
         elif Player.state == self.RUN:
             self.frame = int(self.total_frames) % 11
-
             if self.dir >= 1:
                 self.dir = 1
             else:
                 self.dir += 0.01
         elif Player.state == self.STOP:
             self.frame = int(self.total_frames) % 3
-
             if self.dir <= 0:
                 self.dir = 0
                 Player.state = self.STAND
             else:
                 self.dir -= 0.05
-
-        if Player.state == self.JUMP:
+        elif Player.state == self.JUMP:
             self.frame = int(self.total_frames) % 10
+        elif Player.state == self.SPIN:
+            self.frame = int(self.total_frames) % 4
 
         if self.jump_flag == 1:
             self.jump_dir -= 0.1
@@ -150,6 +156,8 @@ class Player:
                 self.jump_flag = 0
                 Player.state = self.back_state
 
+        if self.spin_flag == 1:
+            self.spin_energy+=1
 
         Player.unreal_x += (self.dir * distance)
         Player.x += (self.dir * distance)
@@ -176,7 +184,7 @@ class Player:
         elif Player.state == self.JUMP:
             self.image.clip_draw(0, 140, 44, 60, self.x, self.y)
         elif Player.state == self.SPIN:
-            self.image.clip_draw(0, 140, 44, 60, self.x, self.y)
+            self.image.clip_draw(self.frame * 60, 70, 60, 70, self.x, self.y)
 
         Player.font.draw(680, 550, '%d' % self.eat_coin_num,(255,255,0))
 
@@ -203,22 +211,27 @@ class Player:
                 self.back_state = self.STAND
                 Player.state = self.JUMP
                 self.jump_flag = 1
-                self.back_y = Player.y
+                Player.jump_before_y = Player.y
+                self.jump_sound.play()
             elif Player.state in (self.STOP, ):
                 self.back_state = self.STOP
                 Player.state = self.JUMP
                 self.jump_flag = 1
                 Player.jump_before_y = Player.y
+                self.jump_sound.play()
             elif Player.state in (self.RUN, ):
                 self.back_state = self.RUN
                 Player.state = self.JUMP
                 self.jump_flag = 1
                 Player.jump_before_y = Player.y
+                self.jump_sound.play()
             elif Player.state in (self.JUMP, ):
                 Player.state = self.SPIN
                 self.spin_flag = 1
+                self.spin_sound.play()
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_SPACE):
             if Player.state in (self.SPIN, ):
+                Player.state = self.JUMP
                 self.spin_flag = 0
 
     def eat(self, map_on_coin):

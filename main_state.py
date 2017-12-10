@@ -17,6 +17,7 @@ from map_on_coin import Map_on_Coin
 from avalanche import Avalanche
 from house import House
 from snow import Snow
+from game_over import Game_over
 
 name = "MainState"
 
@@ -28,23 +29,25 @@ avalanche = None
 coin = None
 snows = None
 map_on_coins = None
+game_over = None
 
 
 def enter():
     game_framework.reset_time()
-    global map, player, house, background, avalanche, coin, snows, map_on_coins
+    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over
     map = Map()
     player = Player()
     house = House()
     background = Background()
     avalanche = Avalanche()
     coin = Coin()
+    game_over = Game_over()
     map_on_coins = [Map_on_Coin() for i in range(200)]
     snows = [Snow() for i in range(20)]
 
 
 def exit():
-    global map, player, house, background, avalanche, coin, snows, map_on_coins
+    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over
     del (map)
     del (player)
     del (house)
@@ -53,6 +56,7 @@ def exit():
     del (coin)
     del (snows)
     del (map_on_coins)
+    del (game_over)
 
 
 def pause():
@@ -87,15 +91,17 @@ def collide(a, b):
 
 
 def update(frame_time):
-    player.update(frame_time)
     map.update(frame_time)
     house.update(frame_time)
     avalanche.update(frame_time)
     house.update(frame_time)
     coin.update(frame_time)
+    game_over.update(frame_time)
 
     if collide(avalanche, player):
-        pass # 패배처리
+        avalanche.eat(player)
+    else:
+        player.update(frame_time)
 
     for map_on_coin in map_on_coins:
         map_on_coin.update(frame_time)
@@ -106,18 +112,18 @@ def update(frame_time):
 
     for snow in snows:
         snow.update(frame_time)
-    delay(0.01)
 
 def draw(frame_time):
     clear_canvas()
     background.draw()
     house.draw()
     map.draw()
-    avalanche.draw()
     for snow in snows:
         snow.draw()
     for map_on_coin in map_on_coins:
         map_on_coin.draw()
     coin.draw()
     player.draw()
+    avalanche.draw()
+    game_over.draw()
     update_canvas()

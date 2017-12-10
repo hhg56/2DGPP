@@ -8,8 +8,8 @@ class Map_on_Coin:
     image = None
 
     def __init__(self):
-        self.x = random.randint(0, 7000)
-        self.y = Map.arr_y[self.x]
+        self.x = random.randint(0, 8000)
+        self.y = Map.arr_y[self.x] + random.randint(0,70)
         self.frame_x = 0
         self.frame_y = 0
         if self.image == None:
