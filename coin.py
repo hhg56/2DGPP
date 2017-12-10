@@ -8,6 +8,7 @@ class Coin:
         self.x = 650
         self.y = 550
         self.frame = 0
+
         if self.image == None:
             self.image = load_image('resouce\\coin.png')
 
