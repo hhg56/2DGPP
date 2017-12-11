@@ -12,8 +12,7 @@ class House:
             House.image = load_image('resouce\\house.png')
 
     def update(self, frame_time):
-        if Player.state == 1:
-            self.x -= 5
+        pass
 
     def draw(self):
-        self.image.draw(self.x, self.y)
+        self.image.draw(self.x - Player.unreal_x + 380, self.y)
