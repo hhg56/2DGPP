@@ -18,6 +18,7 @@ from avalanche import Avalanche
 from house import House
 from snow import Snow
 from game_over import Game_over
+from santa import Santa
 
 name = "MainState"
 
@@ -30,11 +31,12 @@ coin = None
 snows = None
 map_on_coins = None
 game_over = None
+santa = None
 
 
 def enter():
     game_framework.reset_time()
-    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over
+    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over, santa
     map = Map()
     player = Player()
     house = House()
@@ -42,12 +44,13 @@ def enter():
     avalanche = Avalanche()
     coin = Coin()
     game_over = Game_over()
+    santa = Santa()
     map_on_coins = [Map_on_Coin() for i in range(200)]
     snows = [Snow() for i in range(20)]
 
 
 def exit():
-    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over
+    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over, santa
     del (map)
     del (player)
     del (house)
@@ -57,6 +60,7 @@ def exit():
     del (snows)
     del (map_on_coins)
     del (game_over)
+    del (santa)
 
 
 def pause():
@@ -124,6 +128,7 @@ def draw(frame_time):
         map_on_coin.draw()
     coin.draw()
     player.draw()
+    santa.draw()
     avalanche.draw()
     game_over.draw()
     update_canvas()
