@@ -18,11 +18,11 @@ def enter():
 
     select_state = start_state
 
-    if image == None:
-        image = load_image('resouce\\title.png')
-        select_image = load_image('resouce\\title_select.png')
-        select_sound = load_wav('resouce\\stomp.wav')
-        select_sound.set_volume(32)
+    #if image == None:
+    image = load_image('resouce\\title.png')
+    select_image = load_image('resouce\\title_select.png')
+    select_sound = load_wav('resouce\\stomp.wav')
+    select_sound.set_volume(32)
 
 def exit():
     global image, select_image, select_state, select_sound
