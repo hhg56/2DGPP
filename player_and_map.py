@@ -19,7 +19,8 @@ class Map:
         self.map_move_y_flag = 0
 
         if Map.image == None:
-            for i in range(0, 10):
+            self.i = 0
+            for i in range(0, 11):
                 self.i = 800*i
                 while self.i < 620 + (800*i):
                     Map.arr_x.append(self.i)
@@ -47,8 +48,9 @@ class Map:
 
 
     def draw(self):
-        for i in range(0, 800*10):
+        for i in range(0, 800*11):
             self.image.draw(Map.arr_x[i] - Player.unreal_x + 380, Map.arr_y[i]*2 - Player.y + Map.map_move_y_minor*2)
+            i += 1
 
 
 class Player:

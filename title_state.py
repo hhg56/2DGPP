@@ -11,6 +11,7 @@ select_sound = None
 start_state, menu_state, exit_state = 1, 2, 3
 
 def enter():
+    game_framework.reset_time()
     global image
     global select_image
     global select_state
