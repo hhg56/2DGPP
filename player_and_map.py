@@ -50,7 +50,7 @@ class Map:
     def draw(self):
         for i in range(0, 800*11):
             self.image.draw(Map.arr_x[i] - Player.unreal_x + 380, Map.arr_y[i]*2 - Player.y + Map.map_move_y_minor*2)
-            i += 1
+            i += 2
 
 
 class Player:
