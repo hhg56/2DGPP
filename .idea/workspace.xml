@@ -32,9 +32,6 @@
               <caret line="52" column="18" lean-forward="false" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1513953670732" expanded="true" signature="47:1600" ph="..." />
-                <marker date="1513953670732" expanded="true" signature="1429:1600" ph="..." />
-                <marker date="1513953670732" expanded="true" signature="1464:1600" ph="..." />
               </folding>
             </state>
           </provider>
@@ -95,7 +92,7 @@
       <file leaf-file-name="santa.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/santa.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="304">
               <caret line="16" column="12" lean-forward="false" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -182,6 +179,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -193,8 +192,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,9 +349,6 @@
           <caret line="93" column="48" lean-forward="false" selection-start-line="93" selection-start-column="48" selection-end-line="93" selection-end-column="48" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1513953670732" expanded="true" signature="47:1600" ph="..." />
-            <marker date="1513953670732" expanded="true" signature="1429:1600" ph="..." />
-            <marker date="1513953670732" expanded="true" signature="1464:1600" ph="..." />
           </folding>
         </state>
       </provider>
@@ -438,9 +432,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1513953670732" expanded="true" signature="47:1600" ph="..." />
-            <marker date="1513953670732" expanded="true" signature="1429:1600" ph="..." />
-            <marker date="1513953670732" expanded="true" signature="1464:1600" ph="..." />
           </folding>
         </state>
       </provider>
@@ -625,7 +616,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/santa.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="304">
           <caret line="16" column="12" lean-forward="false" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -649,9 +640,6 @@
           <caret line="52" column="18" lean-forward="false" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1513953670732" expanded="true" signature="47:1600" ph="..." />
-            <marker date="1513953670732" expanded="true" signature="1429:1600" ph="..." />
-            <marker date="1513953670732" expanded="true" signature="1464:1600" ph="..." />
           </folding>
         </state>
       </provider>
