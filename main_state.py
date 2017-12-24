@@ -19,6 +19,9 @@ from house import House
 from snow import Snow
 from game_over import Game_over
 from santa import Santa
+from game_clear import Game_clear
+from distance import Distance
+from stone import Stone
 
 name = "MainState"
 
@@ -32,11 +35,14 @@ snows = None
 map_on_coins = None
 game_over = None
 santa = None
+game_clear = None
+distance = None
+stones = None
 
 
 def enter():
     game_framework.reset_time()
-    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over, santa
+    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over, santa, game_clear, distance, stones
     map = Map()
     player = Player()
     house = House()
@@ -45,8 +51,12 @@ def enter():
     coin = Coin()
     game_over = Game_over()
     santa = Santa()
+    game_clear = Game_clear()
+    distance = Distance()
     map_on_coins = [Map_on_Coin() for i in range(200)]
     snows = [Snow() for i in range(20)]
+    stones = [Stone() for i in range(10)]
+
     Player.x = 300.0
     Player.y = 300.0
     Player.unreal_x = 300.0
@@ -54,10 +64,12 @@ def enter():
     Player.jump_before_y = 0
     Map.map_move_y_minor = 0
     Avalanche.game_over = 0
+    Game_clear.game_clear = 0
+    Santa.game_clear = 0
 
 
 def exit():
-    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over, santa
+    global map, player, house, background, avalanche, coin, snows, map_on_coins, game_over, santa, game_clear, distance, stones
     del (map)
     del (player)
     del (house)
@@ -68,6 +80,9 @@ def exit():
     del (map_on_coins)
     del (game_over)
     del (santa)
+    del (game_clear)
+    del (distance)
+    del (stones)
 
 
 def pause():
@@ -102,17 +117,30 @@ def collide(a, b):
 
 
 def update(frame_time):
-    map.update(frame_time)
-    house.update(frame_time)
-    avalanche.update(frame_time)
     house.update(frame_time)
     coin.update(frame_time)
     game_over.update(frame_time)
+    game_clear.update(frame_time)
+    santa.update(frame_time)
+    distance.update(frame_time)
 
-    if collide(avalanche, player):
-        avalanche.eat(player)
+    for stone in stones:
+        if collide(stone, player):
+            stones.remove(stone)
+            player.strike(stone)
+        else:
+            Player.strike_flag = 0
+
+    if collide(santa, player):
+        santa.eat(player)
     else:
-        player.update(frame_time)
+        avalanche.update(frame_time)
+        map.update(frame_time)
+
+        if collide(avalanche, player):
+            avalanche.eat(player)
+        else:
+            player.update(frame_time)
 
     for map_on_coin in map_on_coins:
         map_on_coin.update(frame_time)
@@ -124,11 +152,14 @@ def update(frame_time):
     for snow in snows:
         snow.update(frame_time)
 
+
 def draw(frame_time):
     clear_canvas()
     background.draw()
     house.draw()
     map.draw()
+    for stone in stones:
+        stone.draw()
     for snow in snows:
         snow.draw()
     for map_on_coin in map_on_coins:
@@ -137,5 +168,7 @@ def draw(frame_time):
     player.draw()
     santa.draw()
     avalanche.draw()
+    distance.draw()
+    game_clear.draw()
     game_over.draw()
     update_canvas()

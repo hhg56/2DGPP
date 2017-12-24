@@ -6,6 +6,7 @@ from player_and_map import Player
 
 class Santa:
     image = None
+    game_clear = None
 
     def __init__(self):
         self.x = 800*10 + 300
@@ -18,7 +19,10 @@ class Santa:
         pass
 
     def get_bb(self):
-        return self.x - Player.unreal_x + 380 - 60, 0, self.x - Player.unreal_x + 380 + 60, 600
+        return self.x - Player.unreal_x + 380 - 60, self.y * 2 - Player.y + Map.map_move_y_minor * 2 - 600, self.x - Player.unreal_x + 380 + 60, self.y * 2 - Player.y + Map.map_move_y_minor * 2 + 600
 
     def draw(self):
         self.image.draw(self.x - Player.unreal_x + 380, self.y * 2 - Player.y + Map.map_move_y_minor * 2)
+
+    def eat(self, player):
+        Santa.game_clear = 1

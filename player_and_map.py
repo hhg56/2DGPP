@@ -79,6 +79,8 @@ class Player:
     unreal_y = None
     flag = None
     state = None
+    eat_coin_num = None
+    strike_flag = None
 
     def __init__(self):
         Player.x = 300.0
@@ -86,6 +88,8 @@ class Player:
         Player.unreal_x = 300.0
         Player.unreal_y = 0
         Player.jump_before_y = 0
+        Player.eat_coin_num = 0
+        Player.strike_flag = 0
         Player.state = self.STOP
         self.jump_flag = 0
         self.frame = random.randint(0, 8)
@@ -98,7 +102,6 @@ class Player:
         self.y_dir = 0.0
         self.jump_dir = 5.0
         self.back_state = 0
-        self.eat_coin_num = 0
         if Player.image == None:
             Player.image = load_image('resouce\\board.png')
             Player.fast_image = load_image('resouce\\spin_speed_fast.png')
@@ -113,6 +116,8 @@ class Player:
             Player.jump_sound.set_volume(32)
             Player.eat_sound = load_wav('resouce\\coin.wav')
             Player.eat_sound.set_volume(32)
+            Player.strike_sound = load_wav('resouce\\strike.wav')
+            Player.strike_sound.set_volume(50)
 
     def update(self, frame_time):
 
@@ -228,7 +233,7 @@ class Player:
             elif self.spin_fast == 2 or self.spin_fast == 3:
                 self.most_fast_image.clip_draw(0, 0, self.spin_energy, 10, self.x - 50 + self.spin_energy/2, self.y + 40)
 
-        Player.font.draw(680, 550, '%d' % self.eat_coin_num,(255,255,0))
+        Player.font.draw(680, 550, '%d' % Player.eat_coin_num,(255,255,0))
 
     def get_bb(self):
         return self.x - 20, self.y - 30, self.x+20, self.y + 30
@@ -280,4 +285,14 @@ class Player:
 
     def eat(self, map_on_coin):
         self.eat_sound.play()
-        self.eat_coin_num += 1
+        Player.eat_coin_num += 1
+
+    def strike(self, stone):
+        if Player.strike_flag == 0:
+            self.strike_sound.play()
+            Player.state = self.STOP
+            Player.strike_flag = 1
+        elif Player.strike_flag == 1:
+            Player.strike_flag += 1
+            if Player.strike_flag >= 1000:
+                Player.strike_flag = 0
