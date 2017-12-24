@@ -3,8 +3,6 @@ import random
 from pico2d import *
 
 class Map:
-    x = None
-    y = None
     image = None
     arr_x = []
     arr_y = []
@@ -50,7 +48,7 @@ class Map:
     def draw(self):
         for i in range(0, 800*11):
             self.image.draw(Map.arr_x[i] - Player.unreal_x + 380, Map.arr_y[i]*2 - Player.y + Map.map_move_y_minor*2)
-            i += 1
+            i += 5
 
 
 class Player:
@@ -66,10 +64,14 @@ class Player:
 
     STAND, RUN, JUMP, STOP, SPIN = 0, 1, 2, 3, 4
     image = None
+    fast_image = None
+    more_fast_image = None
+    most_fast_image = None
     eat_sound = None
     jump_sound = None
     spin_sound = None
     font = None
+
     x = None
     y = None
     jump_before_y = None
@@ -90,6 +92,7 @@ class Player:
         self.life_time = 0.0
         self.spin_flag = 0
         self.spin_energy = 0
+        self.spin_fast = 0
         self.total_frames = 0.0
         self.dir = 0.0
         self.y_dir = 0.0
@@ -98,8 +101,11 @@ class Player:
         self.eat_coin_num = 0
         if Player.image == None:
             Player.image = load_image('resouce\\board.png')
+            Player.fast_image = load_image('resouce\\spin_speed_fast.png')
+            Player.more_fast_image = load_image('resouce\\spin_speed_more_fast.png')
+            Player.most_fast_image = load_image('resouce\\spin_speed_most_fast.png')
 
-            Player.font = load_font('resouce\\ENCR10B.TTF')
+            Player.font = load_font('resouce\\ENCR10B.TTF', 35)
 
             Player.spin_sound = load_wav('resouce\\spin.wav')
             Player.spin_sound.set_volume(32)
@@ -122,8 +128,26 @@ class Player:
             self.frame = int(self.total_frames) % 2
         elif Player.state == self.RUN:
             self.frame = int(self.total_frames) % 11
-            if self.dir >= 1:
-                self.dir = 1
+            if self.spin_fast == 0:
+                if self.dir >= 1:
+                    self.dir = 1
+                else:
+                    self.dir +=0.01
+            elif self.spin_fast == 1:
+                if self.dir >= 1.1:
+                    self.dir = 1.1
+                else:
+                    self.dir +=0.01
+            elif self.spin_fast == 2:
+                if self.dir >= 1.2:
+                    self.dir = 1.2
+                else:
+                    self.dir +=0.01
+            elif self.spin_fast >= 3:
+                if self.dir >= 1.3:
+                    self.dir = 1.3
+                else:
+                    self.dir +=0.01
             else:
                 self.dir += 0.01
         elif Player.state == self.STOP:
@@ -137,6 +161,9 @@ class Player:
             self.frame = int(self.total_frames) % 10
         elif Player.state == self.SPIN:
             self.frame = int(self.total_frames) % 4
+            self.spin_energy += 5
+            if self.spin_energy == 100:
+                self.spin_energy = 0
 
         if self.jump_flag == 1:
             self.jump_dir -= 0.1
@@ -159,7 +186,14 @@ class Player:
                 Player.state = self.back_state
 
         if self.spin_flag == 1:
-            self.spin_energy+=1
+            if self.spin_fast >= 3:
+                self.spin_fast = 3
+                self.spin_energy = 100
+            else:
+                self.spin_energy += 1
+                if self.spin_energy >= 100:
+                    self.spin_energy = 0
+                    self.spin_fast += 1
 
         Player.unreal_x += (self.dir * distance)
         Player.x += (self.dir * distance)
@@ -187,6 +221,12 @@ class Player:
             self.image.clip_draw(0, 140, 44, 60, self.x, self.y)
         elif Player.state == self.SPIN:
             self.image.clip_draw(self.frame * 60, 70, 60, 70, self.x, self.y)
+            if self.spin_fast == 0:
+                self.fast_image.clip_draw(0, 0, self.spin_energy, 10, self.x - 50 + self.spin_energy/2, self.y + 40)
+            elif self.spin_fast == 1:
+                self.more_fast_image.clip_draw(0, 0, self.spin_energy, 10, self.x - 50 + self.spin_energy/2, self.y + 40)
+            elif self.spin_fast == 2 or self.spin_fast == 3:
+                self.most_fast_image.clip_draw(0, 0, self.spin_energy, 10, self.x - 50 + self.spin_energy/2, self.y + 40)
 
         Player.font.draw(680, 550, '%d' % self.eat_coin_num,(255,255,0))
 
@@ -230,6 +270,8 @@ class Player:
             elif Player.state in (self.JUMP, ):
                 Player.state = self.SPIN
                 self.spin_flag = 1
+                self.spin_fast = 0
+                self.spin_energy = 0
                 self.spin_sound.play()
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_SPACE):
             if Player.state in (self.SPIN, ):

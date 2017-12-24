@@ -47,6 +47,13 @@ def enter():
     santa = Santa()
     map_on_coins = [Map_on_Coin() for i in range(200)]
     snows = [Snow() for i in range(20)]
+    Player.x = 300.0
+    Player.y = 300.0
+    Player.unreal_x = 300.0
+    Player.unreal_y = 0
+    Player.jump_before_y = 0
+    Map.map_move_y_minor = 0
+    Avalanche.game_over = 0
 
 
 def exit():

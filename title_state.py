@@ -1,7 +1,7 @@
 import game_framework
 import main_state
+import control_state
 from pico2d import *
-
 
 name = "TitleState"
 image = None
@@ -43,9 +43,11 @@ def handle_events(frame_time):
                 game_framework.quit()
             elif(event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
                 if select_state == start_state:
+                    game_framework.reset_time()
                     game_framework.change_state(main_state)
                 elif select_state == menu_state:
-                    pass
+                    select_sound.play()
+                    game_framework.change_state(control_state)
                 elif select_state == exit_state:
                     game_framework.quit()
             elif(event.type, event.key) == (SDL_KEYDOWN, SDLK_DOWN):
