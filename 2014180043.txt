@@ -1,3 +1,10 @@
+Mon Dec 25 03:51:04 2017 +0900 add stone, distance_bar, end_santa, present
+Sun Dec 24 23:07:54 2017 +0900 add control_state and clear term, spin fast term
+Sat Dec 23 23:58:03 2017 +0900 add game end state
+Fri Dec 22 23:42:23 2017 +0900 add restart
+Thu Dec 21 22:48:24 2017 +0900 add last clear state
+Thu Dec 14 23:33:50 2017 +0900 add change title state
+Wed Dec 13 18:12:31 2017 +0900 hg
 Wed Dec 13 18:05:47 2017 +0900 hg
 Tue Dec 12 23:37:19 2017 +0900 hg
 Mon Dec 11 22:36:16 2017 +0900 hg
